@@ -192,9 +192,10 @@ def generate_ugc_script_breakdown(idea: str, niche: str, tone: str, platform: st
         
         # UGC Script Generation Prompt
         ugc_prompt = PromptTemplate(
-            template="""You are an expert UGC (User Generated Content) video scriptwriter.Your task is to create a highly engaging, authentic-feeling {length}-second video script for {platform} using the AIDA Framework (Gold Standard for Direct-Response).
+            template="""You are an expert UGC (User Generated Content) video scriptwriter. 
+Your task is to create a highly engaging, authentic-feeling {length}-second video script for {platform}.
 
-## BRAND/PRODUCT:
+## PRODUCT/IDEA:
 {idea}
 
 ## TARGET AUDIENCE:
@@ -206,110 +207,96 @@ def generate_ugc_script_breakdown(idea: str, niche: str, tone: str, platform: st
 ## LANGUAGE:
 {language}
 
-##===== THE AIDA FRAMEWORK (MANDATORY) =====##
+## UGC VIDEO STRUCTURE (5 parts):
+1. HOOK (3 seconds, 1 shot) - Grab immediate attention
+   - Ask provocative question
+   - Show bold claim
+   - Call out specific person
+   - Pattern interrupt
 
-### 🎯 ATTENTION (0-3s) - Pattern Interrupt
-**Use ONE Psychological Hook:**
-  • "I wish I knew about this sooner..."
-  • "I'm going to stop gatekeeping my favorite..."
-  • "How I went from [A] to [B] in just [X] days..."
-  • "This is why your [X] isn't working..."
-  • "POV: You finally found the perfect [product]..."
-  • "Stop scrolling if you [problem]..."
+2. PROBLEM (5-8 seconds, 1-2 shots) - Establish pain point
+   - Describe the struggle/frustration
+   - Make it relatable and emotional
 
-### 🤔 INTEREST (3-10s) - Agitate Pain Point
-Show the "BEFORE" state. Make it relatable:
-  • "I used to...", "I was SO frustrated when..."
-  • Be specific about the struggle
-  • Create emotional connection
+3. SOLUTION (8-12 seconds, 2-3 shots) - Introduce product
+   - "Then I tried..."
+   - Natural transition
+   - Show excitement/discovery
 
-### ✨ DESIRE (10-25s) - Introduce Solution
-"The Bridge" technique (Before → After):
-  • "Then I tried {idea} and honestly..."
-  • Show the "AFTER" state (relief, transformation)
-  • Apply "The So What? Test": Every feature explains HOW it helps
-  • Optional "Us vs. Them": Compare to "standard products"
+4. PROOF/DEMO (8-12 seconds, 2-4 shots) - Build credibility
+   - Before/after results
+   - Key features (2-3 max)
+   - How it actually works
+   - Real testimonial feel
 
-### 🎬 ACTION (25-30s) - Clear CTA
-Single, direct command:
-  • "Go grab yours now"
-  • Urgency: "Limited stock" or "Use code XYZ"
-  • "Link in bio"
+5. CTA (3-5 seconds, 1 shot) - Drive action
+   - Direct command
+   - Urgency or incentive
+   - "Link in bio" / "Use code XYZ"
 
-##===== PROMOTIONAL TECHNIQUES (Choose 1-2) =====##
-1. **The Bridge**: Before (Struggle) vs. After (Success)
-2. **Green Screen**: Talk over review screenshot
-3. **The Haul/Unboxing**: Tactile experience
-4. **The Aesthetic POV**: "POV: You finally..."
+## YOUR TASK:
+Generate exactly {num_shots} shots. For EACH shot, provide:
 
-##===== SHOT-BY-SHOT REQUIREMENTS =====##
-Generate {num_shots} shots. For EACH:
+1. **shot_number**: Sequential number (1, 2, 3...)
+2. **type**: One of: hook, problem, solution, proof, b-roll, cta
+3. **duration**: 5-12 seconds (total should equal ~{length}s)
+4. **scene**: Detailed visual description (setting, action, props) - KEEP IN ENGLISH
+5. **script**: Natural, conversational dialogue (include "umm", pauses, realistic speech) - WRITE IN {language}
+6. **emotion**: excited, surprised, curious, frustrated, relieved, confident
+7. **camera**: static, slow-zoom, pan, handheld, selfie-angle
+8. **image_prompt**: Detailed prompt for generating first-frame reference image (for Midjourney/DALL-E) - KEEP IN ENGLISH
+9. **video_prompt**: Detailed prompt for video generator (HeyGen/Runway) - include scene + script + emotion + movement - KEEP IN ENGLISH
 
-1. **shot_number**: 1, 2, 3...
-2. **type**: attention, interest, desire, action
-3. **duration**: 3-8 seconds (total ≈ {length}s)
-4. **scene**: Visual instruction [Creator action]. ENGLISH ONLY.
-5. **script**: Natural dialogue ("okay so", "literally"). IN {language}.
-6. **emotion**: excited, curious, frustrated, relieved, confident
-7. **camera**: selfie-angle, slow-zoom, handheld, static
-8. **image_prompt**: For Stable Diffusion. ENGLISH ONLY.
-9. **video_prompt**: For video generation. ENGLISH ONLY.
+## CRITICAL RULES:
+- Make script feel AUTHENTIC and HUMAN (not robotic or salesy)
+- Use first-person perspective ("I", "my")
+- Include natural speech patterns ("okay so", "honestly", "literally")
+- Each shot must flow naturally to the next
+- Total duration should be close to {length} seconds
+- **Image/Video Prompts MUST be in ENGLISH** regardless of script language.
+- **Scene descriptions MUST be in ENGLISH**.
+- **Script/Dialogue MUST be in {language}**.
+  - If {language} is Urdu, use proper Urdu script (e.g., "کیا حال ہے"). output the script text in Urdu characters so the TTS engine can read it correctly.
+  - If {language} is English, use English.
 
-##===== OPTIMIZATION (Auto-Apply) =====##
-✅ **Native Feel**: Real person, not robot
-✅ **Visual Storytelling**: Include B-roll instructions
-✅ **"So What?" Test**: Features → Benefits
-
-##===== CRITICAL RULES =====##
-- FIRST-PERSON ("I", "my")
-- Natural speech ("umm", "like", "okay so")
-- NO corporate jargon
-- Total duration ≈ {length}s
-- **Image/Video Prompts**: ENGLISH
-- **Scene**: ENGLISH
-- **Script**: {language}
-  - If Urdu: Use Urdu script (کیا حال ہے)
-  - If English: Use English
-
-##===== OUTPUT FORMAT (JSON ONLY) =====##
+## OUTPUT FORMAT:
+Return ONLY a valid JSON object with this structure:
 {{
   "video_concept": {{
-    "hook_strategy": "Hook used (English)",
-    "problem_agitation": "Pain point (English)",
-    "solution_bridge": "Positioning (English)",
-    "proof_technique": "Credibility (English)",
-    "cta_action": "CTA (English)",
-    "promotional_technique": "Technique (English)"
+    "hook": "brief hook strategy (English)",
+    "problem": "pain point summary (English)",
+    "solution": "product introduction approach (English)",
+    "proof": "credibility strategy (English)",
+    "cta": "call to action (English)"
   }},
   "shots": [
     {{
       "shot_number": 1,
-      "type": "attention",
+      "type": "hook",
       "duration": 3,
-      "scene": "[Creator looks at camera, holding product]",
-      "script": "Stop scrolling if you've been struggling with...",
-      "emotion": "urgent",
-      "camera": "selfie-angle",
-      "image_prompt": "Close-up portrait holding product, bright lighting",
-      "video_prompt": "Person talking to camera with product, head nod, eye contact"
+      "scene": "Close-up of person's face...",
+      "script": "Okay so this literally changed my life...",
+      "emotion": "excitement",
+      "camera": "static, selfie-angle",
+      "image_prompt": "Close-up portrait...",
+      "video_prompt": "Young person records selfie..."
     }},
-    ... ({num_shots} shots following AIDA)
+    ... (continue for all {num_shots} shots)
   ],
   "production_notes": {{
-    "character_description": "Creator persona",
-    "setting": "Locations",
+    "character_description": "Describe ideal character",
+    "setting": "Primary locations",
     "total_estimated_duration": {length},
-    "aida_timing": "Attention:0-3s, Interest:3-10s, Desire:10-25s, Action:25-30s",
-    "tips": ["Tip 1", "Tip 2"]
+    "tips": ["tip 1", "tip 2", "tip 3"]
   }},
   "voice_script": {{
-    "full_text": "Complete narration in {language}...",
-    "suggested_voice": "Voice profile",
+    "full_text": "Complete script combining all dialogue...",
+    "suggested_voice": "Young female, energetic...",
     "estimated_duration": {length}
   }}
 }}
 
-Generate the WORLD-CLASS AIDA UGC script NOW:""",
+Generate the complete UGC video script now:""",
             input_variables=["idea", "niche", "tone", "platform", "length", "num_shots", "language"]
         )
         

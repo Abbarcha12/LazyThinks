@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/50;
+  }
+  
+  .glass-card {
+    @apply bg-white border border-slate-100 shadow-lg shadow-slate-200/50 rounded-2xl;
+  }
+}

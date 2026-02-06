@@ -2,7 +2,39 @@ langchain-groq
 python-dotenv
 fastapi
 uvicorn
-chromadb
-langchain-chroma
-langchain_community
+langchain
+langchain-community
 beautifulsoup4
+chromadb
+pydantic
+elevenlabs
+sqlalchemy
+
+# Task Queue & Background Processing
+celery==5.3.6
+redis==5.0.1
+
+# Voice Generation (Azure TTS)
+azure-cognitiveservices-speech==1.35.0
+
+# Image Generation (Stable Diffusion)
+stability-sdk==0.8.4
+
+# Video Generation & Processing
+requests==2.31.0
+opencv-python==4.9.0.80
+moviepy==1.0.3
+Pillow>=10.2.0
+
+# Progress Tracking
+tqdm==4.66.1
+
+# MCP Server
+mcp
+
+
+# MCP Server
+mcp
+
+# OpenAI Compatible (SiliconFlow)
+langchain-openai

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Showcase - Cold Email Agent</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #050505;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+        }
+
+        .canvas {
+            width: 1200px;
+            height: 675px;
+            background: radial-gradient(circle at 50% 10%, #1e1b4b 0%, #020617 80%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+            border: 1px solid #1e293b;
+        }
+
+        /* Background Code Layer */
+        .code-bg {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            font-family: 'JetBrains Mono', monospace;
+            color: rgba(99, 102, 241, 0.15);
+            /* Faded Indigo */
+            font-size: 14px;
+            line-height: 1.6;
+            z-index: 1;
+            transform: rotate(-3deg) scale(1.1);
+            pointer-events: none;
+            white-space: pre-wrap;
+            overflow: hidden;
+        }
+
+        /* Main Content Container */
+        .content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Title Area */
+        .title-area {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .project-label {
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 80px;
+            margin: 0;
+            font-weight: 900;
+            line-height: 1.1;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 3D Glass Cards */
+        .cards-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .glass-card {
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+        }
+
+        .card-label {
+            color: #94a3b8;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .arrow {
+            font-size: 40px;
+            color: #6366f1;
+            opacity: 0.8;
+            text-shadow: 0 0 15px #6366f1;
+        }
+
+        /* Bottom Tech Bar */
+        .tech-bar {
+            position: absolute;
+            bottom: 50px;
+            display: flex;
+            gap: 30px;
+            padding: 15px 40px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .tech-item {
+            color: #e2e8f0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #6366f1;
+            border-radius: 50%;
+        }
+
+        /* Lighting Effects */
+        .light-beam {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="canvas">
+        <div class="code-bg">
+            class JobPosting(BaseModel):
+            role: str = Field(description="The job title or role")
+            company_name: str = Field(description="name of the company")
+            summary: str = Field(description="Brief summary of the job")
+            experience: str = Field(description="Years of experience")
+            skills: list[str] = Field(description="List of required skills")
+
+            def process_job_and_generate_proposal(url: str, job_description: str):
+            # Setup LLM (Two instances: extraction, creative writing)
+            llm_extract = ChatGroq(temperature=0, model_name="llama-3.3-70b")
+            llm_proposal = ChatGroq(temperature=0.8, model_name="llama-3.3-70b")
+
+            # "Mental Hunter" Framework for Proposal
+            proposal_prompt = PromptTemplate(
+            template="You are an Elite Consultant who solves high-value problems..."
+            )
+
+            return email_chain.invoke(job_data)
+        </div>
+
+        <div class="light-beam"></div>
+
+        <div class="content">
+            <div class="title-area">
+                <div class="project-label">Project Showcase</div>
+                <h1>Cold Email Agent</h1>
+            </div>
+
+            <div class="cards-container">
+                <div class="glass-card">
+                    <div class="icon">📄</div>
+                    <div class="card-label">Job Posting</div>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="glass-card" style="border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.05);">
+                    <div class="icon">🧠</div>
+                    <div class="card-label">AI Logic</div>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="glass-card">
+                    <div class="icon">🚀</div>
+                    <div class="card-label">Proposal</div>
+                </div>
+            </div>
+
+            <div class="tech-bar">
+                <div class="tech-item"><span class="dot"></span>LangChain</div>
+                <div class="tech-item"><span class="dot"></span>FastAPI</div>
+                <div class="tech-item"><span class="dot"></span>React</div>
+                <div class="tech-item"><span class="dot"></span>Groq LLM</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
